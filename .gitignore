@@ -1,6 +1,6 @@
 
 ./backend/node_modules
-/backend/.env
+
 ./frontend/node_modules
 ./frontend/.next
 /client/.next
@@ -8,7 +8,7 @@
 
 **/node_modules
 **/.next
-**/.env
+
 
 
 
