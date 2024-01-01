@@ -23,6 +23,21 @@ const getWorkout = async (req, res) => {
 // create new workout
 const createWorkout = async (req, res) => {
   const { title, load, reps } = req.body;
+  let emptyFields = [];
+  if (!title) {
+    emptyFields.push("title");
+  }
+  if (!load) {
+    emptyFields.push("load");
+  }
+  if (!reps) {
+    emptyFields.push("reps");
+  }
+  if (emptyFields.length > 0) {
+    return res
+      .status(400)
+      .json({ error: "Please fill in all fields", emptyFields });
+  }
   // add document to db
   try {
     const workout = await Workout.create({ title, load, reps });
@@ -40,9 +55,9 @@ const deleteWorkout = async (req, res) => {
   }
   const workout = await Workout.findOneAndDelete({ _id: id });
   if (!workout) {
-    return req.status(400).json({ error: "No such workout" });
+    return res.status(400).json({ error: "No such workout" });
   }
-  res.status(200).json({ message: "Workout deleted successfully" });
+  res.status(200).json(workout);
 };
 
 // update a workout
